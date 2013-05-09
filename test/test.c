@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../include/log.h"
+#include "../include/liblog.h"
 
 int main() {
 	LogTrace("trace log");

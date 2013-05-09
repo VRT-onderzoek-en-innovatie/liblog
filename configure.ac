@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT([liblog], [1.0.0], [])
+AC_INIT([liblog], [0.0.0], [])
 AM_INIT_AUTOMAKE([dist-bzip2 -Wall])
 LT_INIT
 
