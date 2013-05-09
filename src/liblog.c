@@ -1,7 +1,6 @@
 #include "../config.h"
 
 #include "../include/log.h"
-#include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 
@@ -18,6 +17,13 @@
 
 
 static enum LogLevel current_log_level = Trace;
+static FILE *output = NULL;
+
+FILE *LogSetOutput(FILE *out) {
+	FILE *old = output;
+	output = out;
+	return old;
+}
 
 static void genTimestamp(char *date_str) {
 	struct timeval tv_now;
@@ -53,19 +59,20 @@ int LogAtLevel(enum LogLevel level,
 	int rv;
 	char date_str[32];
 
-	if( level < current_log_level ) return 0;
+	if (level < current_log_level) return 0;
+	if (output == NULL) LogSetOutput(stdout);
 
 	genTimestamp(date_str);
 
-	fprintf(stdout, "%s %s from %s:%d (%s): ",
+	fprintf(output, "%s %s from %s:%d (%s): ",
 	                date_str, LogLevelName[level],
 	                file, lineNum, func);
 
 	va_start(ap,fmt);
-	rv = vfprintf(stdout, fmt, ap);
+	rv = vfprintf(output, fmt, ap);
 	va_end(ap);
 
-	fprintf(stdout, "\n");
+	fprintf(output, "\n");
 
 	return rv;
 }

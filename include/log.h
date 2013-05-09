@@ -2,6 +2,7 @@
 #define __LIBLOG_LOG_H__
 
 #include "loglevel.h"
+#include <stdio.h>
 
 /* If the log-level is not specified,
    compile in all */
@@ -14,6 +15,7 @@ int LogAtLevel(enum LogLevel level,
                const char *fmt, ...);
 
 enum LogLevel LogSetLevel(enum LogLevel level);
+FILE *LogSetOutput(FILE *out);
 
 #if LOG_LEVEL <= LOG_LEVEL_TRACE
 #define LogTrace(fmt, ...) LogAtLevel(Trace, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)

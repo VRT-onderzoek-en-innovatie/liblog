@@ -1,1 +1,22 @@
-Very very much inspired by liblogger (http://liblogger.sourceforge.net/)
+This is very much inspired by liblogger (http://liblogger.sourceforge.net/).
+
+It provides a set of Log() macro's that behave similar to printf():
+LogTrace(fmt, ...)
+LogDebug(fmt, ...)
+LogInfo (fmt, ...)
+LogWarn (fmt, ...)
+LogError(fmt, ...)
+LogFatal(fmt, ...)
+
+A first filter is done at compile-time. Log() statements of a level lower than
+LOG_LEVEL are removed and produce no code at all.
+
+A second filter is done at run-time. The remaining Log() statements incure a
+function call, which returns immediately if the level of the statement is lower
+than the current_log_level (set via the LogSetLevel() call).
+
+Output is by default to STDOUT, but can be changed with LogSetOutput(FILE*).
+
+All Log() output is prepended with the current date&time, the location of the
+calling statement "file:linenumber (function)". A newline is automatically
+appended.
