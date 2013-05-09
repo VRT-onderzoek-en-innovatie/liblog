@@ -47,6 +47,7 @@ AM_PROG_CC_C_O # per product options in Makefile.am
 ########
 AC_CONFIG_FILES([
 	Makefile
+	include/Makefile
 	src/Makefile
 	test/Makefile
 	])
