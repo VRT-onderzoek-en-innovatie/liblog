@@ -2,6 +2,6 @@
 #include "../include/log.h"
 
 int main() {
-	LogTrace("trace log\n");
+	LogTrace("trace log");
 	return 0;
 }

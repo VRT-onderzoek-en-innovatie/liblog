@@ -13,6 +13,8 @@ int LogAtLevel(enum LogLevel level,
                const char *file, const char *func, const int lineNum,
                const char *fmt, ...);
 
+enum LogLevel LogSetLevel(enum LogLevel level);
+
 #if LOG_LEVEL <= LOG_LEVEL_TRACE
 #define LogTrace(fmt, ...) LogAtLevel(Trace, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else

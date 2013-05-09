@@ -33,14 +33,26 @@ AM_PROG_CC_C_O # per product options in Makefile.am
 
 # Checks for header files.
 ##########################
+AC_CHECK_HEADERS([string.h sys/time.h])
+AC_HEADER_TIME
 
 
 # Checks for typedefs, structures, and compiler characteristics.
 ################################################################
 
+#AC_STRUCT_TM
+# This macro is obsolescent, as time.h defines struct tm in current systems. New
+# programs need not use this macro.
+# source: http://www.gnu.org/software/autoconf/manual/autoconf-2.67/html_node/Particular-Structures.html#index-AC_005fSTRUCT_005fTM-685
+
 
 # Checks for library functions.
 ###############################
+
+# AC_FUNC_STRFTIME
+# This macro is obsolescent, as no current systems require the intl library for
+# strftime. New programs need not use this macro.
+# source: http://www.gnu.org/software/autoconf/manual/autoconf-2.67/html_node/Particular-Functions.html#AC_FUNC_STRFTIME
 
 
 # Output
