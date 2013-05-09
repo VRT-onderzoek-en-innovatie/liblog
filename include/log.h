@@ -9,40 +9,40 @@
 #define LOG_LEVEL LOG_LEVEL_TRACE
 #endif
 
-
+int LogAtLevel(enum LogLevel level, const char *fmt, ...);
 
 #if LOG_LEVEL <= LOG_LEVEL_TRACE
-#define LogTrace(fmt, ...) printf(fmt, ## __VA_ARGS__)
+#define LogTrace(fmt, ...) LogAtLevel(Trace, fmt, ## __VA_ARGS__)
 #else
 #define LogTrace /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_DEBUG
-#define LogDebug(fmt, ...) printf(fmt, ## __VA_ARGS__)
+#define LogDebug(fmt, ...) LogAtLevel(Debug, fmt, ## __VA_ARGS__)
 #else
 #define LogDebug /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_INFO
-#define LogInfo(fmt, ...)  printf(fmt, ## __VA_ARGS__)
+#define LogInfo(fmt, ...)  LogAtLevel(Info, fmt, ## __VA_ARGS__)
 #else
 #define LogInfo  /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_WARN
-#define LogWarn(fmt, ...)  printf(fmt, ## __VA_ARGS__)
+#define LogWarn(fmt, ...)  LogAtLevel(Warn, fmt, ## __VA_ARGS__)
 #else
 #define LogWarn  /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_ERROR
-#define LogError(fmt, ...) printf(fmt, ## __VA_ARGS__)
+#define LogError(fmt, ...) LogAtLevel(Error, fmt, ## __VA_ARGS__)
 #else
 #define LogError /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_FATAL
-#define LogFatal(fmt, ...) printf(fmt, ## __VA_ARGS__)
+#define LogFatal(fmt, ...) LogAtLevel(Fatal, fmt, ## __VA_ARGS__)
 #else
 #define LogFatal /* no-op */
 #endif
