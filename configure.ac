@@ -39,6 +39,7 @@ AC_HEADER_TIME
 
 # Checks for typedefs, structures, and compiler characteristics.
 ################################################################
+AC_C_CONST
 
 #AC_STRUCT_TM
 # This macro is obsolescent, as time.h defines struct tm in current systems. New
@@ -48,6 +49,8 @@ AC_HEADER_TIME
 
 # Checks for library functions.
 ###############################
+AC_CHECK_FUNCS([gettimeofday])
+AC_FUNC_VPRINTF
 
 # AC_FUNC_STRFTIME
 # This macro is obsolescent, as no current systems require the intl library for
