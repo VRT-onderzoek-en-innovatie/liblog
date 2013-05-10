@@ -59,10 +59,13 @@ FILE *LogGetOutputFile(struct Log_logger *l);
 
 
 /* Helper function for the Log{Level} macro's */
-int LogAtLevel(struct Log_logger *l,
-               enum LogLevel level,
-               const char *file, const char *func, const int lineNum,
-               const char *fmt, ...);
+int LogAtLevel_debug(struct Log_logger *l,
+                     enum LogLevel level,
+                     const char *file, const char *func, const int lineNum,
+                     const char *fmt, ...);
+int LogAtLevel_nodebug(struct Log_logger *l,
+                       enum LogLevel level,
+                       const char *fmt, ...);
 
 #ifdef __cplusplus
 }
@@ -70,39 +73,51 @@ int LogAtLevel(struct Log_logger *l,
 
 
 #if LOG_LEVEL <= LOG_LEVEL_TRACE
-#define LogTrace(fmt, ...) LogAtLevel(NULL, Trace, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogTrace(fmt, ...)               LogAtLevel_debug(NULL,   Trace, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogLoggerTrace(logger, fmt, ...) LogAtLevel_debug(logger, Trace, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else
-#define LogTrace /* no-op */
+#define LogTrace       /* no-op */
+#define LogLoggerTrace /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_DEBUG
-#define LogDebug(fmt, ...) LogAtLevel(NULL, Debug, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogDebug(fmt, ...)               LogAtLevel_debug(NULL,   Debug, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogLoggerDebug(logger, fmt, ...) LogAtLevel_debug(logger, Debug, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else
-#define LogDebug /* no-op */
+#define LogDebug       /* no-op */
+#define LogLoggerDebug /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_INFO
-#define LogInfo(fmt, ...)  LogAtLevel(NULL, Info, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogInfo(fmt, ...)                LogAtLevel_debug(NULL,   Info, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogLoggerInfo(logger, fmt, ...)  LogAtLevel_debug(logger, Info, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else
-#define LogInfo  /* no-op */
+#define LogInfo        /* no-op */
+#define LogLoggerInfo  /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_WARN
-#define LogWarn(fmt, ...)  LogAtLevel(NULL, Warn, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogWarn(fmt, ...)                LogAtLevel_debug(NULL,   Warn, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogLoggerWarn(logger, fmt, ...)  LogAtLevel_debug(logger, Warn, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else
-#define LogWarn  /* no-op */
+#define LogWarn        /* no-op */
+#define LogLoggerWarn  /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_ERROR
-#define LogError(fmt, ...) LogAtLevel(NULL, Error, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogError(fmt, ...)               LogAtLevel_debug(NULL,   Error, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogLoggerError(logger, fmt, ...) LogAtLevel_debug(logger, Error, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else
-#define LogError /* no-op */
+#define LogError       /* no-op */
+#define LogLoggerError /* no-op */
 #endif
 
 #if LOG_LEVEL <= LOG_LEVEL_FATAL
-#define LogFatal(fmt, ...) LogAtLevel(NULL, Fatal, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogFatal(fmt, ...)               LogAtLevel_debug(NULL,   Fatal, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
+#define LogLoggerFatal(logger, fmt, ...) LogAtLevel_debug(logger, Fatal, __FILE__, __func__, __LINE__, fmt, ## __VA_ARGS__)
 #else
-#define LogFatal /* no-op */
+#define LogFatal       /* no-op */
+#define LogLoggerFatal /* no-op */
 #endif
 
 #endif // defined __LIBLOG_LOG_H__

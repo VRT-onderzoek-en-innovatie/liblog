@@ -116,10 +116,10 @@ static void output(struct Log_logger *l, char *log_line) {
 	}
 }
 
-int LogAtLevel(struct Log_logger *l,
-               enum LogLevel level,
-               const char *file, const char *func, const int lineNum,
-               const char *fmt, ...) {
+int LogAtLevel_debug(struct Log_logger *l,
+                     enum LogLevel level,
+                     const char *file, const char *func, const int lineNum,
+                     const char *fmt, ...) {
 	va_list ap;
 	int rv;
 	char *buf;
@@ -134,7 +134,7 @@ int LogAtLevel(struct Log_logger *l,
 	if (l->current_log_destination == Null ) return 0;
 
 	buf = l->buffer; buf_len = sizeof(l->buffer);
-	rv = snprintf(buf, buf_len, "%s from %s:%d (%s): ",
+	rv = snprintf(buf, buf_len, "[%s from %s:%d (%s)] ",
 	              LogLevelName[level],
 	              file, lineNum, func);
 	if( rv == -1 ) {
@@ -152,3 +152,30 @@ int LogAtLevel(struct Log_logger *l,
 	return buf - l->buffer;
 }
 
+int LogAtLevel_nodebug(struct Log_logger *l,
+                       enum LogLevel level,
+                       const char *fmt, ...) {
+	va_list ap;
+	int rv;
+	char *buf;
+	size_t buf_len;
+
+	if( l == NULL ) {
+		init_default_logger();
+		l = &default_logger;
+	}
+
+	if (level < l->current_log_level) return 0;
+	if (l->current_log_destination == Null ) return 0;
+
+	buf = l->buffer; buf_len = sizeof(l->buffer);
+
+	va_start(ap,fmt);
+	rv = vsnprintf(buf, buf_len, fmt, ap);
+	va_end(ap);
+	buf += rv; buf_len -= rv;
+
+	output(l, l->buffer);
+
+	return buf - l->buffer;
+}
