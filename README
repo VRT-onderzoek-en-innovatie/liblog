@@ -15,8 +15,6 @@ A second filter is done at run-time. The remaining Log() statements incure a
 function call, which returns immediately if the level of the statement is lower
 than the current_log_level (set via the LogSetLevel() call).
 
-Output is by default to STDOUT, but can be changed with LogSetOutput(FILE*).
-
-All Log() output is prepended with the current date&time, the location of the
-calling statement "file:linenumber (function)". A newline is automatically
-appended.
+When DEBUG is defined (when compiling your program, not when compiling this
+library), the location of the Log() statement will be prepended to the log
+message in the form of "<level> from <file>:<lineno> (<function>)".
