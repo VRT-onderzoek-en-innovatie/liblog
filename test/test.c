@@ -4,12 +4,12 @@
 #include "../include/liblog.h"
 
 int main() {
-	LogSetLevel(Info);
+	LogSetLevel(NULL, Info);
 	LogTrace("This should compile away");
 	LogDebug("This should not show");
 	LogInfo("This should show");
 
-	LogSetOutput(NULL);
+	LogSetOutputFile(NULL, NULL);
 	LogTrace("This should compile away");
 	LogDebug("This should not show");
 	LogInfo("This should show");

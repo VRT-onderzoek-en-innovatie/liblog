@@ -16,14 +16,38 @@
 #endif
 
 
-static enum LogLevel current_log_level = Trace;
-static FILE *output = NULL;
+static struct Log_logger default_logger;
 
-FILE *LogSetOutput(FILE *out) {
-	FILE *old = output;
-	output = out;
-	return old;
+static void init_default_logger() {
+	if( default_logger.current_log_destination != uninitialized ) return;
+
+	default_logger.current_log_level = 0;
+	default_logger.current_log_destination = FileStream;
+	default_logger.log_destination_file_stream = stderr;
 }
+
+
+void LogSetOutputFile(struct Log_logger *l, FILE *out) {
+	if( l == NULL ) {
+		init_default_logger();
+		l = &default_logger;
+	}
+	if( out != NULL ) {
+		l->current_log_destination = FileStream;
+		l->log_destination_file_stream = out;
+	} else {
+		l->current_log_destination = Null;
+	}
+}
+FILE *LogGetOutputFile(struct Log_logger *l) {
+	if( l == NULL ) {
+		init_default_logger();
+		l = &default_logger;
+	}
+	if( l->current_log_destination != FileStream ) return NULL;
+	return l->log_destination_file_stream;
+}
+
 
 static void genTimestamp(char *date_str) {
 	struct timeval tv_now;
@@ -52,33 +76,45 @@ static void genTimestamp(char *date_str) {
 	}
 }
 
-int LogAtLevel(enum LogLevel level,
+int LogAtLevel(struct Log_logger *l,
+               enum LogLevel level,
                const char *file, const char *func, const int lineNum,
                const char *fmt, ...) {
 	va_list ap;
 	int rv;
 	char date_str[32];
 
-	if (level < current_log_level) return 0;
-	if (output == NULL) LogSetOutput(stdout);
+	if( l == NULL ) {
+		init_default_logger();
+		l = &default_logger;
+	}
+
+	if (level < l->current_log_level) return 0;
+	if (l->current_log_destination == Null ) return 0;
 
 	genTimestamp(date_str);
 
-	fprintf(output, "%s %s from %s:%d (%s): ",
-	                date_str, LogLevelName[level],
-	                file, lineNum, func);
+	fprintf(l->log_destination_file_stream,
+	        "%s %s from %s:%d (%s): ",
+	        date_str, LogLevelName[level],
+	        file, lineNum, func);
 
 	va_start(ap,fmt);
-	rv = vfprintf(output, fmt, ap);
+	rv = vfprintf(l->log_destination_file_stream, fmt, ap);
 	va_end(ap);
 
-	fprintf(output, "\n");
+	fprintf(l->log_destination_file_stream, "\n");
 
 	return rv;
 }
 
-enum LogLevel LogSetLevel(enum LogLevel level) {
-	enum LogLevel old = current_log_level;
-	current_log_level = level;
+enum LogLevel LogSetLevel(struct Log_logger *l, enum LogLevel level) {
+	enum LogLevel old;
+	if( l == NULL ) {
+		init_default_logger();
+		l = &default_logger;
+	}
+	old = l->current_log_level;
+	l->current_log_level = level;
 	return old;
 }
