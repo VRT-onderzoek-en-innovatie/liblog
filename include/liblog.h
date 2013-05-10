@@ -10,6 +10,8 @@
 #define LOG_LEVEL LOG_LEVEL_TRACE
 #endif
 
+#define LOG_MAX_LINE_LENGTH 4096
+
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -22,6 +24,7 @@ enum LogDestination {
 
 struct Log_logger {
 	enum LogLevel current_log_level;
+	char buffer[LOG_MAX_LINE_LENGTH];
 	enum LogDestination current_log_destination;
 	FILE *log_destination_file_stream;
 };
