@@ -15,9 +15,9 @@ extern "C"{
 #endif
 
 enum LogDestination {
-	uninitialized=0,
 	Null,
-	FileStream
+	FileStream,
+	uninitialized
 	};
 
 struct Log_logger {
@@ -28,6 +28,7 @@ struct Log_logger {
 
 
 /* Initialize a new logger
+ * Returns NULL on failure
  */
 struct Log_logger *Log_init();
 

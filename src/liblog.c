@@ -3,6 +3,7 @@
 #include "../include/liblog.h"
 #include <stdarg.h>
 #include <string.h>
+#include <stdlib.h>
 
 #if TIME_WITH_SYS_TIME
 # include <sys/time.h>
@@ -16,7 +17,7 @@
 #endif
 
 
-static struct Log_logger default_logger;
+static struct Log_logger default_logger = {0, uninitialized, 0};
 
 static void init_default_logger() {
 	if( default_logger.current_log_destination != uninitialized ) return;
@@ -24,6 +25,19 @@ static void init_default_logger() {
 	default_logger.current_log_level = 0;
 	default_logger.current_log_destination = FileStream;
 	default_logger.log_destination_file_stream = stderr;
+}
+
+struct Log_logger *Log_init() {
+	struct Log_logger *l = malloc(sizeof(struct Log_logger));
+	if( l == NULL ) return NULL;
+	l->current_log_level = 0;
+	l->current_log_destination = Null;
+	return l;
+}
+
+void Log_deinit(struct Log_logger *l) {
+	l->current_log_destination = uninitialized;
+	free(l);
 }
 
 
