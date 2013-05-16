@@ -27,7 +27,7 @@ static void init_default_logger() {
 	default_logger.log_destination_file_stream = stderr;
 }
 
-struct Log_logger *Log_init() {
+struct Log_logger *LogInit() {
 	struct Log_logger *l = malloc(sizeof(struct Log_logger));
 	if( l == NULL ) return NULL;
 	l->current_log_level = 0;
@@ -35,7 +35,7 @@ struct Log_logger *Log_init() {
 	return l;
 }
 
-void Log_deinit(struct Log_logger *l) {
+void LogDeinit(struct Log_logger *l) {
 	l->current_log_destination = uninitialized;
 	free(l);
 }
@@ -46,12 +46,8 @@ void LogSetOutputFile(struct Log_logger *l, FILE *out) {
 		init_default_logger();
 		l = &default_logger;
 	}
-	if( out != NULL ) {
-		l->current_log_destination = FileStream;
-		l->log_destination_file_stream = out;
-	} else {
-		l->current_log_destination = Null;
-	}
+	l->current_log_destination = FileStream;
+	l->log_destination_file_stream = out;
 }
 FILE *LogGetOutputFile(struct Log_logger *l) {
 	if( l == NULL ) {

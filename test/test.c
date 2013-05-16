@@ -14,5 +14,9 @@ int main() {
 	LogDebug("This should not show");
 	LogInfo("This should show");
 
+	LogInfo("Generate a warning: %s", 5);
+
+	LogInit();
+
 	return 0;
 }

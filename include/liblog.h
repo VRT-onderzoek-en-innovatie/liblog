@@ -7,10 +7,15 @@
 /* If the log-level is not specified,
    compile in all */
 #ifndef LOG_LEVEL
-#define LOG_LEVEL LOG_LEVEL_TRACE
+#  define LOG_LEVEL LOG_LEVEL_TRACE
 #endif
 
 #define LOG_MAX_LINE_LENGTH 4096
+
+#ifndef __GNUC__
+#  define  __attribute__(x)  /* no-op */
+#endif
+
 
 #ifdef __cplusplus
 extern "C"{
@@ -33,11 +38,11 @@ struct Log_logger {
 /* Initialize a new logger
  * Returns NULL on failure
  */
-struct Log_logger *Log_init();
+struct Log_logger *LogInit() __attribute__((__malloc__,warn_unused_result));
 
 /* Terminate a logger. All resources are free'd
  */
-void Log_deinit(struct Log_logger *l);
+void LogDeinit(struct Log_logger *l) __attribute__((nonnull(1)));
 
 
 /* Set the run-time log level.
@@ -51,7 +56,8 @@ enum LogLevel LogSetLevel(struct Log_logger *l, enum LogLevel level);
 
 /* Start logging to the file specified.
  */
-void LogSetOutputFile(struct Log_logger *l, FILE *out);
+void LogSetOutputFile(struct Log_logger *l, FILE *out)
+                     __attribute__((nonnull(2)));
 /* Get the current output file, or NULL if not logging to file
  */
 FILE *LogGetOutputFile(struct Log_logger *l);
@@ -62,10 +68,14 @@ FILE *LogGetOutputFile(struct Log_logger *l);
 int LogAtLevel_debug(struct Log_logger *l,
                      enum LogLevel level,
                      const char *file, const char *func, const int lineNum,
-                     const char *fmt, ...);
+                     const char *fmt, ...)
+                    __attribute__((format (__printf__, 6, 7)))
+                    ;
 int LogAtLevel_nodebug(struct Log_logger *l,
                        enum LogLevel level,
-                       const char *fmt, ...);
+                       const char *fmt, ...)
+                      __attribute__((format (__printf__, 3, 4)))
+                      ;
 
 #ifdef __cplusplus
 }
