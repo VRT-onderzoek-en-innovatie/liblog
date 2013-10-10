@@ -1,7 +1,7 @@
 #ifndef __LIBLOG_LOG_H__
 #define __LIBLOG_LOG_H__
 
-#include "liblog_level.h"
+#include "libsimplelog_level.h"
 #include <stdio.h>
 
 /* If the log-level is not specified,

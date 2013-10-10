@@ -1,6 +1,6 @@
 #include "../config.h"
 
-#include "../include/liblog.h"
+#include "../include/libsimplelog.h"
 #include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>

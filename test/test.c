@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "../include/liblog_level.h"
+#include "../include/libsimplelog_level.h"
 #define LOG_LEVEL LOG_LEVEL_DEBUG
-#include "../include/liblog.h"
+#include "../include/libsimplelog.h"
 
 int main() {
 	LogSetLevel(NULL, Info);

@@ -1,4 +1,4 @@
-lib_LTLIBRARIES = liblog.la
+lib_LTLIBRARIES = libsimplelog.la
 
-liblog_la_SOURCES = liblog.c ../include/liblog.h ../include/liblog_level.h
-liblog_la_LDFLAGS = -version 0.0.0
+libsimplelog_la_SOURCES = libsimplelog.c ../include/libsimplelog.h ../include/libsimplelog_level.h
+libsimplelog_la_LDFLAGS = -version 0.0.0

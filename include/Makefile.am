@@ -1,1 +1,1 @@
-include_HEADERS = liblog.h liblog_level.h
+include_HEADERS = libsimplelog.h libsimplelog_level.h
