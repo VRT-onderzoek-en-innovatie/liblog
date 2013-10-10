@@ -7,14 +7,15 @@ int main() {
 	LogSetLevel(NULL, Info);
 	LogTrace("This should compile away");
 	LogDebug("This should not show");
-	LogInfo("This should show");
+	LogInfo("This should show on stderr");
 
-	LogSetOutputFile(NULL, NULL);
+	LogSetOutputFile(NULL, stdout);
 	LogTrace("This should compile away");
 	LogDebug("This should not show");
-	LogInfo("This should show");
+	LogInfo("This should show on stdout");
 
-	LogInfo("Generate a warning: %s", 5);
+	LogSetLevel(NULL, Warn);
+	LogInfo("Generate a compile time warning: %s", 5);
 
 	LogInit();
 
