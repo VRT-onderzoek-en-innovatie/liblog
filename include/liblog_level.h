@@ -17,14 +17,4 @@ typedef enum LogLevel {
 	Fatal
 	} LogLevel;
 
-const char *LogLevelName[] = {
-	"trace",
-	"debug",
-	"info",
-	"warn",
-	"error",
-	"fatal"
-	};
-#define LOG_LEVEL_NAME_MAX_LENGTH 5
-
 #endif // defined __LIBLOG_LOGLEVEL_H__

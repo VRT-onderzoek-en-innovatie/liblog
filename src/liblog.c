@@ -17,6 +17,17 @@
 #endif
 
 
+const char *LogLevelName[] = {
+	"trace",
+	"debug",
+	"info",
+	"warn",
+	"error",
+	"fatal"
+	};
+#define LOG_LEVEL_NAME_MAX_LENGTH 5
+
+
 static struct Log_logger default_logger = {0, "", uninitialized, 0};
 
 static void init_default_logger() {
