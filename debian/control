@@ -1,0 +1,24 @@
+Source: libsimplelog
+Priority: optional
+Maintainer: Niels Laukens <niels.laukens@vrt.be>
+Build-Depends: debhelper (>= 9.0.0), autotools-dev, dh-autoreconf
+Standards-Version: 3.9.4
+Section: libs
+Homepage: https://github.com/VRT-onderzoek-en-innovatie/libsimplelog
+Vcs-Git: git://github.com/VRT-onderzoek-en-innovatie/libsimplelog.git
+Vcs-Browser: https://github.com/VRT-onderzoek-en-innovatie/libsimplelog
+
+Package: libsimplelog-dev
+Section: libdevel
+Architecture: any
+Depends: libsimplelog1 (= ${binary:Version}), ${misc:Depends}
+Description: Minimal logging library - development package
+ Minimal logging library that compiles out unused log levels.
+
+Package: libsimplelog1
+Section: libs
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Minimal logging library
+ Minimal logging library that compiles out unused log levels.

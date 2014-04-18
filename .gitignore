@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 
+/GITREVISION
 /aclocal.m4
 /autom4te.cache/*
 /compile
