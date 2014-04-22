@@ -18,3 +18,9 @@ than the current_log_level (set via the LogSetLevel() call).
 When DEBUG is defined (when compiling your program, not when compiling this
 library), the location of the Log() statement will be prepended to the log
 message in the form of "<level> from <file>:<lineno> (<function>)".
+
+
+TODO
+----
+read and use http://www.akkadia.org/drepper/dsohowto.pdf
+symbol versioning
