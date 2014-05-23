@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT([libsimplelog], [1.0.0], [])
+AC_INIT([libsimplelog], m4_esyscmd_s([dpkg-parsechangelog | sed -n 's/^Version: //p']), [])
 AM_INIT_AUTOMAKE([dist-bzip2 -Wall])
 LT_INIT
 
